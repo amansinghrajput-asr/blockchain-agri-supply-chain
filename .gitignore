@@ -7,6 +7,7 @@ dist
 *.db-wal
 *.db-shm
 *.timestamp-*
+cloudflared.exe
 deployment-address.json
 .venv
 __pycache__
