@@ -1,0 +1,10 @@
+{
+  "name": "blockchain-agri-supply-chain",
+  "private": true,
+  "workspaces": ["frontend", "backend", "blockchain"],
+  "scripts": {
+    "dev:frontend": "npm --workspace frontend run dev",
+    "dev:backend": "npm --workspace backend run dev",
+    "compile:contract": "npm --workspace blockchain run compile"
+  }
+}

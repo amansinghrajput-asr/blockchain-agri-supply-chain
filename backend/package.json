@@ -1,0 +1,22 @@
+{
+  "name": "agri-chain-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "db:init": "node src/db-init.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "better-sqlite3": "^13.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.2",
+    "express": "^4.21.0",
+    "form-data": "^4.0.0",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.13.0",
+    "uuid": "^10.0.0"
+  }
+}
