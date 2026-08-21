@@ -36,5 +36,11 @@ db.exec(`
   );
 `);
 
+try {
+  db.exec("ALTER TABLE batches ADD COLUMN user_id TEXT REFERENCES users(id);");
+} catch (e) {
+  // Column already exists
+}
+
 console.log("Database initialized with users, batches, and batch_events tables (SQLite)");
 db.close();

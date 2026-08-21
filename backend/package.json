@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
-    "db:init": "node src/db-init.js"
+    "db:init": "node src/db-init.js",
+    "db:seed": "node src/seed.js"
   },
   "dependencies": {
     "axios": "^1.7.7",
