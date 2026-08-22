@@ -1,116 +1,161 @@
-# 🌾 AgriChain — Blockchain Agricultural Supply Chain Transparency
+# 🌾 AgriChain — Blockchain-Powered Agricultural Supply Chain
 
-A full-stack MVP for farm-to-market traceability with AI crop quality assessment, QR traceability, supply-chain status tracking, and EVM smart-contract settlement.
+> AI-driven crop quality assessment + Blockchain traceability + QR-code transparency for farm-to-market produce tracking.
 
-## Architecture
+## 🚀 Live Demo
 
-| Layer | Technology | Description |
-|-------|-----------|-------------|
-| **Frontend** | React + Vite | Premium dark-mode dashboard with routing, QR codes, quality assessment |
-| **Backend API** | Node.js + Express | RESTful API with PostgreSQL, blockchain integration |
-| **AI Service** | FastAPI + OpenCV | Computer-vision crop quality scoring |
-| **Blockchain** | Solidity + Hardhat | On-chain batch creation, quality recording, payment settlement |
-| **Database** | PostgreSQL | Batch storage, event timeline tracking |
-| **Container** | Docker Compose | Full containerized deployment |
+**Public URL (Tunnel):** _Run `start-demo.bat` to get a live public URL_
 
-## Features
+**Demo Login:**
+- Email: `demo@agrichain.com`
+- Password: `password123`
 
-- **Batch Management** — Create, track, and settle crop batches through the supply chain
-- **AI Quality Assessment** — Upload crop images for automated quality scoring (sharpness, saturation, brightness)
-- **Supply-Chain Status Tracking** — HARVESTED → QUALITY_CHECKED → IN_TRANSIT → DELIVERED → SETTLED
-- **QR Traceability** — Generate and scan QR codes for instant batch verification
-- **Blockchain Settlement** — On-chain batch creation, quality recording, and payment via Polygon
-- **Activity Timeline** — Full history of every batch event for auditing
+---
 
-## Local Setup
+## ✨ Features
 
-### 1. Start PostgreSQL
-```bash
-docker compose up -d postgres
+| Feature | Description |
+|---|---|
+| 🔐 **User Authentication** | Register/Login with role-based access (Farmer, Distributor, Retailer, Inspector) |
+| 📦 **Batch Management** | Create, track, and manage agricultural batches through supply chain stages |
+| 🤖 **AI Quality Assessment** | Upload crop images for automated freshness, sharpness, and color analysis |
+| ⛓️ **Blockchain Traceability** | Immutable Polygon smart contract records for every supply chain milestone |
+| 📱 **QR Code Scanning** | Scan batch QR codes for instant farm-to-table journey verification |
+| 💰 **Smart Contract Settlement** | Automated payment settlement based on AI quality verification |
+
+---
+
+## 🏗️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Frontend** | React 18, Vite, Vanilla CSS |
+| **Backend** | Node.js, Express.js |
+| **Database** | SQLite (better-sqlite3) |
+| **AI Service** | Python, FastAPI, OpenCV |
+| **Blockchain** | Solidity, Hardhat, Polygon (ethers.js) |
+| **Tunneling** | Cloudflare Tunnel / Tunnelmole |
+
+---
+
+## 📁 Project Structure
+
+```
+blockchain-agri-supply-chain/
+├── frontend/          # React + Vite frontend
+│   └── src/
+│       ├── App.jsx           # Main app with auth & routing
+│       ├── api.js            # Axios API client
+│       ├── utils.js          # Date/timezone utilities
+│       └── components/
+│           ├── Login.jsx          # Auth screen (Sign In / Register)
+│           ├── Dashboard.jsx      # Batch listing & overview
+│           ├── CreateBatch.jsx    # New batch creation form
+│           ├── BatchDetail.jsx    # Batch timeline & QR code
+│           ├── QualityAssess.jsx  # AI crop scanner
+│           └── Toast.jsx          # Notification system
+├── backend/           # Express.js REST API
+│   └── src/
+│       ├── server.js     # API routes, auth, blockchain integration
+│       ├── db.js         # SQLite database connector
+│       ├── db-init.js    # Schema initialization
+│       └── seed.js       # Demo data seeder
+├── ai-service/        # FastAPI computer vision service
+│   └── main.py           # OpenCV quality analysis endpoints
+├── blockchain/        # Solidity smart contracts
+│   └── contracts/
+│       └── AgriSupplyChain.sol
+├── start-demo.bat     # 1-click hackathon launcher
+└── README.md
 ```
 
-### 2. Backend
+---
+
+## ⚡ Quick Start
+
+### Prerequisites
+- **Node.js** v18+
+- **Python** 3.9+
+- **pip** (Python package manager)
+
+### 1. Clone & Install
+
 ```bash
-cd backend
+git clone https://github.com/amansinghrajput-asr/blockchain-agri-supply-chain.git
+cd blockchain-agri-supply-chain
 npm install
-copy .env.example .env    # Windows
-# cp .env.example .env    # Linux/macOS
-npm run db:init
-npm run dev
 ```
 
-### 3. AI Service
+### 2. Install Python Dependencies
+
 ```bash
 cd ai-service
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# Linux/macOS: source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
+pip install fastapi uvicorn opencv-python-headless numpy python-multipart
+cd ..
 ```
 
-### 4. Frontend
+### 3. Initialize Database & Seed Demo Data
+
+```bash
+cd backend
+npm run db:init
+npm run db:seed
+cd ..
+```
+
+### 4. Build Frontend
+
 ```bash
 cd frontend
-npm install
-npm run dev
+npm run build
+cd ..
 ```
 
-Open http://localhost:5173
+### 5. Start Everything (Windows)
 
-## Smart Contract
+**Option A — One click:**
+```
+Double-click start-demo.bat
+```
 
+**Option B — Manual:**
 ```bash
-cd blockchain
-npm install
-copy .env.example .env
-npm run compile
-npm run test
-npm run deploy:local
+# Terminal 1: AI Service
+cd ai-service
+uvicorn main:app --host 0.0.0.0 --port 8000
+
+# Terminal 2: Backend + Frontend
+cd backend
+node src/server.js
+
+# Terminal 3: Public Tunnel (optional)
+cloudflared tunnel --url http://localhost:4000
 ```
 
-For Polygon Amoy, add `RPC_URL` and `PRIVATE_KEY` to `.env`, then:
-```bash
-npm run deploy:amoy
-```
+### 6. Open Dashboard
 
-After deployment, copy the contract address from `deployment-address.json` into `backend/.env` as `CONTRACT_ADDRESS`.
+Visit **http://localhost:4000** in your browser.
 
-**Never commit a private key.**
+---
 
-## API Endpoints
+## 🎯 Demo Flow
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/health` | Health check |
-| POST | `/api/batches` | Create a new batch |
-| GET | `/api/batches` | List all batches |
-| GET | `/api/batches/:id` | Get batch details |
-| PATCH | `/api/batches/:id/status` | Update batch status |
-| POST | `/api/quality/assess` | AI quality assessment (multipart image) |
-| GET | `/api/batches/:id/events` | Get batch event timeline |
-| POST | `/api/batches/:id/settle` | Settle payment |
+1. **Login** → Use demo credentials or register a new account
+2. **Dashboard** → View all batches with status badges and quality scores
+3. **Create Batch** → Register a new agricultural batch (crop, quantity, location)
+4. **AI Quality Scan** → Upload a crop image for automated quality grading
+5. **Track Journey** → Follow batch through: Harvested → Quality Checked → In Transit → Delivered → Settled
+6. **QR Verification** → Scan the QR code on any batch to verify its full history
+7. **Settlement** → Trigger smart contract payment settlement
 
-## Docker (Full Stack)
+---
 
-```bash
-docker compose up --build
-```
+## 👨‍💻 Author
 
-This starts PostgreSQL, Backend (port 4000), AI Service (port 8000), and Frontend (port 5173).
+**Aman Singh** — [GitHub](https://github.com/amansinghrajput-asr)
 
-## Production Deployment
+---
 
-- **Frontend**: Vercel / Netlify
-- **Backend**: Render / Railway / Fly.io
-- **AI Service**: Render / Railway
-- **PostgreSQL**: Neon / Supabase / Render
-- **Contract**: Polygon Amoy (demo) → Polygon PoS (production after audit)
+## 📄 License
 
-Set `VITE_API_URL` in frontend to the public backend URL and `AI_SERVICE_URL` in backend to the public AI URL.
-
-## Important Notes
-
-- The AI service uses an OpenCV baseline heuristic, not a trained ML model. A trained YOLOv8/TensorFlow model can be plugged into `ai-service/main.py` when model weights are available.
-- The blockchain contract should receive a security audit before handling real money on mainnet.
-- Blockchain integration is best-effort — the app works fully with just the database if no contract is deployed.
+This project is built for educational and hackathon demonstration purposes.

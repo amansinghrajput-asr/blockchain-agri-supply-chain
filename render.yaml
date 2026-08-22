@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: agrichain-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: cd ../frontend && npm install && npm run build && cd ../backend && npm install && npm run db:init && npm run db:seed
+    startCommand: node src/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: AI_SERVICE_URL
+        value: http://localhost:8000
+      - key: PORT
+        value: 4000
