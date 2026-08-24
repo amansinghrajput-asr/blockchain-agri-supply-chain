@@ -138,6 +138,26 @@ Visit **http://localhost:4000** in your browser.
 
 ---
 
+## 🌐 GitHub Pages Deployment
+
+This project works on **GitHub Pages** (static hosting) with a built-in localStorage mock backend that simulates all API features including auth, batches, AI assessment, and more.
+
+### Automatic (GitHub Actions)
+1. Push to `main`/`master` branch
+2. Go to **Settings → Pages → Source → GitHub Actions**
+3. The workflow in `.github/workflows/deploy-pages.yml` auto-builds and deploys
+
+### Manual
+```bash
+cd frontend
+GITHUB_PAGES=true npm run build
+# Deploy the dist/ folder to GitHub Pages
+```
+
+> **Note:** On GitHub Pages, data is stored in your browser's localStorage. The full backend (SQLite, blockchain, AI service) requires the local setup above.
+
+---
+
 ## 🎯 Demo Flow
 
 1. **Login** → Use demo credentials or register a new account
